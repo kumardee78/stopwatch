@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <style>
+        body{
+            background-image: url("doctor.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #container {
+            border: solid transparent;
+            width: 40%;
+            background-color: whitesmoke;
+            border-radius: 0.5rem;
+            box-shadow: 0.2rem 0.2rem 1rem 0.15rem lightblue;
+            text-align: center;
+            margin: 10rem auto;
+        }
+        h1{
+            font-family: Castellar;
+            background-color:aqua;
+            padding: 0.8rem 0;
+        }
+        button {
+            color: white;
+            background-color: black;
+            font-family: Broadway;
+            padding: 10px 20px;
+            margin-bottom: 2rem;
+            border-radius: 0.3rem;
+            text-shadow: 0.1rem 0.1rem red;
+            font-size: 1rem;
+        }
+      
+        #display {
+        font-size: 48px;
+        font-weight: bold;
+        }  
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="container">
+            <h1>Stopwatch</h1>
+            <p id="display">00:00:00</p>
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+    <script>
+        let intervalId;
+        let hours = 0;
+        let minutes = 0;
+        let seconds = 0;
+
+        const display = document.getElementById('display');
+        const startBtn = document.getElementById('start');
+        const stopBtn = document.getElementById('stop');
+        const resetBtn = document.getElementById('reset');
+
+        function startTimer() {
+            intervalId = setInterval(updateTimer, 1000);
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            resetBtn.disabled = false;
+        }
+
+        function stopTimer() {
+            clearInterval(intervalId);
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        }
+
+        function resetTimer() {
+            clearInterval(intervalId);
+            hours = 0;
+            minutes = 0;
+            seconds = 0;
+            display.textContent = '00:00:00';
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            resetBtn.disabled = true;
+        }
+
+        function updateTimer() {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+            }
+            if (minutes === 60) {
+                minutes = 0;
+                hours++;
+            }
+
+            const formattedHours = String(hours).padStart(2, '0');
+            const formattedMinutes = String(minutes).padStart(2, '0');
+            const formattedSeconds = String(seconds).padStart(2, '0');
+
+            display.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+        }
+
+        startBtn.addEventListener('click', startTimer);
+        stopBtn.addEventListener('click', stopTimer);
+        resetBtn.addEventListener('click', resetTimer);
+    </script>
+
+</body>
+</html>
